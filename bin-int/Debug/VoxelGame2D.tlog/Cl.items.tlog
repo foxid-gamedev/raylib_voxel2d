@@ -1,9 +1,0 @@
-D:\visualstudio\platformer\raylib_voxel2d\src\actor.cpp;D:\visualstudio\platformer\raylib_voxel2d\bin-int\Debug\actor.obj
-D:\visualstudio\platformer\raylib_voxel2d\src\collision_object.cpp;D:\visualstudio\platformer\raylib_voxel2d\bin-int\Debug\collision_object.obj
-D:\visualstudio\platformer\raylib_voxel2d\src\game_object.cpp;D:\visualstudio\platformer\raylib_voxel2d\bin-int\Debug\game_object.obj
-D:\visualstudio\platformer\raylib_voxel2d\src\main.cpp;D:\visualstudio\platformer\raylib_voxel2d\bin-int\Debug\main.obj
-D:\visualstudio\platformer\raylib_voxel2d\src\game.cpp;D:\visualstudio\platformer\raylib_voxel2d\bin-int\Debug\game.obj
-D:\visualstudio\platformer\raylib_voxel2d\src\pch.cpp;D:\visualstudio\platformer\raylib_voxel2d\bin-int\Debug\pch.obj
-D:\visualstudio\platformer\raylib_voxel2d\src\player.cpp;D:\visualstudio\platformer\raylib_voxel2d\bin-int\Debug\player.obj
-D:\visualstudio\platformer\raylib_voxel2d\src\solid.cpp;D:\visualstudio\platformer\raylib_voxel2d\bin-int\Debug\solid.obj
-D:\visualstudio\platformer\raylib_voxel2d\src\tilemap.cpp;D:\visualstudio\platformer\raylib_voxel2d\bin-int\Debug\tilemap.obj
