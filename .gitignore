@@ -30,3 +30,12 @@
 *.exe
 *.out
 *.app
+
+# Folders
+/bin
+/bin-int
+
+# visual studio
+.vcxproj
+.vcxproj.filters
+.vcxproj.user
