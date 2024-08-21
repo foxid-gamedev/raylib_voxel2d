@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>D:\visualstudio\platformer\RaylibPlatformer\bin\Debug\VoxelGame2D.exe</FullPath>
+      <FullPath>D:\visualstudio\platformer\raylib_voxel2d\bin\Debug\VoxelGame2D.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

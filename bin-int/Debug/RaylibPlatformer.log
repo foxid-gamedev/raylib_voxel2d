@@ -1,9 +1,25 @@
 ﻿cl : befehlszeile  warning D9030: "/Yc" ist mit Multiprocessing inkompatibel. Der Schalter "/MP" wird ignoriert.
+  actor.cpp
+D:\visualstudio\platformer\raylib_voxel2d\src\actor.cpp(21,25): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+D:\visualstudio\platformer\raylib_voxel2d\src\actor.cpp(49,25): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+  collision_object.cpp
+  game_object.cpp
   main.cpp
-D:\visualstudio\platformer\RaylibPlatformer\src\main.cpp(97,55): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-D:\visualstudio\platformer\RaylibPlatformer\src\main.cpp(97,49): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-D:\visualstudio\platformer\RaylibPlatformer\src\main.cpp(97,45): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-D:\visualstudio\platformer\RaylibPlatformer\src\main.cpp(97,32): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+D:\visualstudio\platformer\raylib_voxel2d\src\main.cpp(101,55): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+D:\visualstudio\platformer\raylib_voxel2d\src\main.cpp(101,49): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+D:\visualstudio\platformer\raylib_voxel2d\src\main.cpp(101,45): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+D:\visualstudio\platformer\raylib_voxel2d\src\main.cpp(101,32): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+  game.cpp
+D:\visualstudio\platformer\raylib_voxel2d\src\game.cpp(8,20): warning C4267: "Argument": Konvertierung von "size_t" nach "int", Datenverlust möglich
+D:\visualstudio\platformer\raylib_voxel2d\src\game.cpp(8,13): warning C4267: "Argument": Konvertierung von "size_t" nach "int", Datenverlust möglich
+  pch.cpp
+  player.cpp
+  solid.cpp
+D:\visualstudio\platformer\raylib_voxel2d\src\solid.cpp(58,20): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+D:\visualstudio\platformer\raylib_voxel2d\src\solid.cpp(77,20): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+D:\visualstudio\platformer\raylib_voxel2d\src\solid.cpp(104,20): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+D:\visualstudio\platformer\raylib_voxel2d\src\solid.cpp(123,20): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
   tilemap.cpp
-D:\visualstudio\platformer\RaylibPlatformer\src\tilemap.cpp(74,21): warning C4305: "Argument": Verkürzung von "double" in "float"
-  RaylibPlatformer.vcxproj -> D:\visualstudio\platformer\RaylibPlatformer\bin\Debug\VoxelGame2D.exe
+D:\visualstudio\platformer\raylib_voxel2d\src\tilemap.cpp(77,21): warning C4305: "Argument": Verkürzung von "double" in "float"
+LINK : warning LNK4098: Standardbibliothek "MSVCRT" steht in Konflikt mit anderen Bibliotheken; /NODEFAULTLIB:Bibliothek verwenden.
+  RaylibPlatformer.vcxproj -> D:\visualstudio\platformer\raylib_voxel2d\bin\Debug\VoxelGame2D.exe

@@ -32,10 +32,11 @@
 *.app
 
 # Folders
-/bin
-/bin-int
+bin/
+bin-int/
 
 # visual studio
 .vcxproj
 .vcxproj.filters
 .vcxproj.user
+.vs/
