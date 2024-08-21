@@ -42,6 +42,9 @@
     <ClCompile Include="src\collision_object.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="src\chunk.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game.h">
@@ -78,6 +81,9 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="src\interface_all_actors.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\chunk.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

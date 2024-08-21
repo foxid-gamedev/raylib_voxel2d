@@ -3,9 +3,11 @@
 
 #include "solid.h"
 
-game::Actor::Actor(const ICollisionCheck& collision_check)
-	:	remainder{ 0 },
-		collisionCheck{collision_check}
+game::Actor::Actor(const ICollisionCheck& collision_check) :	
+	remainder{ 0 }, 
+	collisionCheck{ collision_check },
+	isOnFloor{ false }, 
+	isOnRoof{ false }
 {
 
 }
@@ -27,7 +29,6 @@ void game::Actor::moveX(float amount, std::function<void()> on_collide)
 				position.x += static_cast<float>(sign);
 				move -= sign;
 				
-				//isOnFloor = collisionCheck.checkCollision(position.x + sign, position.y + 1, collider.width, collider.height);
 			}
 			else
 			{
@@ -85,5 +86,5 @@ bool game::Actor::isRiding(const game::Solid& solid) const
 
 void game::Actor::squish()
 {
-	std::cout << "sqish the actor!\n";
+	// do nothing (override to handle behaviour)
 }

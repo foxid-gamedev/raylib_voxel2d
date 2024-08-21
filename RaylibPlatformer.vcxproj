@@ -98,6 +98,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\actor.cpp" />
+    <ClCompile Include="src\chunk.cpp" />
     <ClCompile Include="src\collision_object.cpp" />
     <ClCompile Include="src\game_object.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -109,6 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\actor.h" />
+    <ClInclude Include="src\chunk.h" />
     <ClInclude Include="src\collision_object.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\game_object.h" />

@@ -15,10 +15,32 @@ namespace game
 	enum class TileType 
 	{
 		NONE = 0,
-		DIRT = 1,
-		GRASS = 2,
+		GRASS = 1,
+		DIRT = 2,
 		STONE = 3,
 	};
+
+
+	inline void draw_tile_rect(float x, float y, TileType type)
+	{
+		switch (type)
+		{
+		case TileType::NONE:
+			return;
+		case TileType::GRASS:
+			DrawRectangleGradientH(static_cast<int>(x), static_cast<int>(y), static_cast<int>(TILEMAP_CELL_SIZE), static_cast<int>(TILEMAP_CELL_SIZE * 0.2f), GREEN, DARKGREEN);
+			DrawRectangle(static_cast<int>(x), static_cast<int>(y + TILEMAP_CELL_SIZE * 0.2f), static_cast<int>(TILEMAP_CELL_SIZE), static_cast<int>(TILEMAP_CELL_SIZE * 0.8f), BROWN);
+			break;
+		case TileType::DIRT:
+			DrawRectangle(static_cast<int>(x), static_cast<int>(y), static_cast<int>(TILEMAP_CELL_SIZE), static_cast<int>(TILEMAP_CELL_SIZE), BROWN);
+			break;
+		case TileType::STONE:
+			DrawRectangle(static_cast<int>(x), static_cast<int>(y), static_cast<int>(TILEMAP_CELL_SIZE), static_cast<int>(TILEMAP_CELL_SIZE), DARKGRAY);
+			break;
+		default:
+			break;
+		}
+	}
 
 	class Tilemap : public ICollisionCheck
 	{

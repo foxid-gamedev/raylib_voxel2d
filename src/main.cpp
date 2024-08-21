@@ -3,11 +3,15 @@
 #include "game.h"
 #include "player.h"
 #include "tilemap.h"
+#include "chunk.h"
 
 class Game1 : public game::Game 
 {
 public:
-	Game1() : Game(1600, 900, "Platformer"), player{ tilemap } {}
+	Game1() : Game(1600, 900, "Platformer"), player{ tilemap }, chunk(0,0)
+	{
+		
+	}
 	~Game1() override {}
 
 protected:
@@ -15,6 +19,7 @@ protected:
 	{
 		player.setPosition(player_start);
 		tilemap.generateCells();
+		chunk.fillAll(game::TileType::STONE);
 	}
 
 	void update(float deltaTime) override
@@ -86,7 +91,8 @@ protected:
 
 	void render() override
 	{
-		tilemap.render();
+		//tilemap.render();
+		chunk.render();
 		player.render();
 
 		if (selected_tile != game::TileType::NONE)
@@ -114,6 +120,7 @@ protected:
 private:
 	game::Tilemap tilemap;
 	game::Player player;
+	game::Chunk chunk;
 
 	float camera_zoom = 2.0f;
 	Vector2 player_start{ 64.f*16.f, 60.f*16.f };
