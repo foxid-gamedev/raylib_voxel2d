@@ -1,0 +1,9 @@
+﻿cl : befehlszeile  warning D9030: "/Yc" ist mit Multiprocessing inkompatibel. Der Schalter "/MP" wird ignoriert.
+  main.cpp
+D:\visualstudio\platformer\RaylibPlatformer\src\main.cpp(97,55): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+D:\visualstudio\platformer\RaylibPlatformer\src\main.cpp(97,49): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+D:\visualstudio\platformer\RaylibPlatformer\src\main.cpp(97,45): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+D:\visualstudio\platformer\RaylibPlatformer\src\main.cpp(97,32): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+  tilemap.cpp
+D:\visualstudio\platformer\RaylibPlatformer\src\tilemap.cpp(74,21): warning C4305: "Argument": Verkürzung von "double" in "float"
+  RaylibPlatformer.vcxproj -> D:\visualstudio\platformer\RaylibPlatformer\bin\Debug\VoxelGame2D.exe
