@@ -78,8 +78,9 @@ bool game::Actor::isRiding(const game::Solid& solid) const
 {
 	const Rectangle& other = solid.getCollider();
 
-	bool&& is_above_x = (collider.x + collider.width) > other.x && collider.x < (other.x + other.width);
-	bool&& is_above_y = (collider.y + collider.height) >= other.y && (collider.y + collider.height) <= (other.y + other.height);
+	bool&& is_above_x = getRight() > solid.getLeft() && getLeft() < solid.getRight();
+	bool&& is_above_y = getBottom() <= solid.getTop() && getTop() >= solid.getTop() - collider.height;
+	//bool&& is_above_y = (collider.y + collider.height) >= other.y && (collider.y + collider.height) <= (other.y + other.height);
 
 	return is_above_x && is_above_y;
 }
@@ -87,4 +88,5 @@ bool game::Actor::isRiding(const game::Solid& solid) const
 void game::Actor::squish()
 {
 	// do nothing (override to handle behaviour)
+	std::cout << "squished the actor\n";
 }

@@ -2,13 +2,17 @@
 
 #include "game.h"
 
-game::Game::Game(size_t w, size_t h, const char* t)
-	: width(w), height(h), title(t)
+game::Game::Game(size_t w, size_t h, const char* t) : 
+	width(w), height(h), 
+	title(t),
+	tempAllocator(mem::BumpAllocator{ TEMP_ALLOCATOR_SIZE })
 {
 	InitWindow(width, height, title.c_str());
 	SetWindowState(FLAG_VSYNC_HINT);
 	SetTargetFPS(500);
 	camera = {};
+
+	std::cout << "temp_alloc in game: " << &tempAllocator << "\n";
 }
 
 game::Game::~Game() { }
@@ -19,6 +23,8 @@ void game::Game::run()
 
 	while (!WindowShouldClose()) 
 	{
+		tempAllocator.reset();
+
 		update(GetFrameTime());
 
 		BeginDrawing();

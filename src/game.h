@@ -3,8 +3,12 @@
 #include <string>
 #include <raylib.h>
 
+#include "memory/bump_allocator.h"
+
 namespace game 
 {
+	constexpr size_t TEMP_ALLOCATOR_SIZE = 1024;
+
 	class Game 
 	{
 	public:
@@ -19,10 +23,13 @@ namespace game
 		virtual void update(float deltaTime) = 0;
 		virtual void render() = 0;
 		virtual void renderUI() = 0;
+
+		mem::BumpAllocator tempAllocator;
 	private:
 		Camera2D camera;
 		size_t width;
 		size_t height;
 		std::string title;
+
 	};
 }

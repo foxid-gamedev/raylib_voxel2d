@@ -99,28 +99,41 @@
   <ItemGroup>
     <ClCompile Include="src\actor.cpp" />
     <ClCompile Include="src\chunk.cpp" />
+    <ClCompile Include="src\collision_check_manager.cpp" />
     <ClCompile Include="src\collision_object.cpp" />
     <ClCompile Include="src\game_object.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\game.cpp" />
+    <ClCompile Include="src\memory\bump_allocator.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="src\moving_platform.cpp" />
     <ClCompile Include="src\pch.cpp" />
     <ClCompile Include="src\player.cpp" />
     <ClCompile Include="src\solid.cpp" />
+    <ClCompile Include="src\solid_collision_check.cpp" />
     <ClCompile Include="src\tilemap.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\collision_check_manager.h" />
     <ClInclude Include="src\actor.h" />
     <ClInclude Include="src\chunk.h" />
     <ClInclude Include="src\collision_object.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\game_object.h" />
     <ClInclude Include="src\interface_all_actors.h" />
+    <ClInclude Include="src\interface_all_solids.h" />
     <ClInclude Include="src\interface_collision_check.h" />
     <ClInclude Include="src\interface_drawable.h" />
     <ClInclude Include="src\interface_updatable.h" />
+    <ClInclude Include="src\memory\bump_allocator.h" />
+    <ClInclude Include="src\memory\pointer_array.h" />
+    <ClInclude Include="src\moving_platform.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\player.h" />
     <ClInclude Include="src\solid.h" />
+    <ClInclude Include="src\solid_collision_check.h" />
     <ClInclude Include="src\tilemap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
