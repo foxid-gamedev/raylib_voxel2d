@@ -5,6 +5,7 @@
 #include "tilemap.h"
 #include "chunk.h"
 #include "memory/bump_allocator.h"
+#include "memory/pointer_array.h"
 #include "moving_platform.h"
 #include "interface_all_actors.h"
 #include "interface_all_solids.h"
@@ -13,24 +14,25 @@
 
 class Game1 : public game::Game, game::IAllActors, game::IAllSolids
 {
+// construction // --------------------------------------------------------------------------------
 public:
 	Game1() : 
 		Game(1600, 900, "Platformer"), 
 		chunk(0,0),
 		solidCollisions{ this },
 		player{ collisionManager },
-		movingPlatform{{0,0}, 150.f, this, tempAllocator}
+		movingPlatform{{0,0}, 150.f, this, tempAllocator},
+		actorsArray{ tempAllocator, 0 },
+		solidArray{ tempAllocator, 0 }
 	{
-		//movingPlatform = game::MovingPlatform({ 0, 0 }, 150.f, this, tempAllocator);
-		//movingPlatform{ game::MovingPlatform{ {0,0}, 150.f, this, tempAllocator } };
 		collisionManager.addCheck(&solidCollisions);
 		collisionManager.addCheck(&tilemap);
 
-	std::cout << "temp_alloc in game1: " << &tempAllocator << "\n";
 	}
 	~Game1() override {}
 
 protected:
+// load/set data // -------------------------------------------------------------------------------
 	void init() override 
 	{
 		player.setPosition(player_start);
@@ -41,15 +43,19 @@ protected:
 		movingPlatform.setCollider(0, 0, 32, 16);
 	}
 
+// gameplay loop // -------------------------------------------------------------------------------
 	void update(float deltaTime) override
 	{
-		actors_size = 0;
-		actorsPtr = reinterpret_cast<game::Actor**>(tempAllocator.allocate(sizeof(game::Player*)));
-		*actorsPtr = reinterpret_cast<game::Actor*>(& player);
+		// update mouse position //
+		Vector2 mousePos = getScreenToWorld(GetMousePosition());
+		mousePos.x -= 8.f;
+		mousePos.y -= 8.f;
 
-		//memcpy(actorsPtr, &player, sizeof(game::Player*));
-		actors_size=1;
-
+		Vector2 cellPos = tilemap.getNearestCell(mousePos);
+		mouseCellPos.x = cellPos.x * game::TILEMAP_CELL_SIZE;
+		mouseCellPos.y = cellPos.y * game::TILEMAP_CELL_SIZE;
+		
+		// input //
 		if (IsKeyPressed(KEY_ESCAPE))
 			CloseWindow();
 
@@ -100,60 +106,87 @@ protected:
 			movingPlatform.setMoveDirection(0.f, 0.f);
 		}
 
-		// updating mouse pos
-		Vector2 mousePos = getScreenToWorld(GetMousePosition());
-		mousePos.x -= 8.f;
-		mousePos.y -= 8.f;
-
-		Vector2 cellPos = tilemap.getNearestCell(mousePos);
-		mouseCellPos.x = cellPos.x * game::TILEMAP_CELL_SIZE;
-		mouseCellPos.y = cellPos.y * game::TILEMAP_CELL_SIZE;
-
-		// placing tiles
+		// tiles placement //
 		if (selected_tile != game::TileType::NONE)
 		{
 			if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
-				tilemap.setCell(static_cast<size_t>(cellPos.x), static_cast<size_t>(cellPos.y), selected_tile);
+			{
+				tilemap.setCell
+				(
+					static_cast<size_t>(cellPos.x), 
+					static_cast<size_t>(cellPos.y), 
+					selected_tile
+				);
+			}
 		}
 
-		// removing tiles
 		if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
-			tilemap.setCell(static_cast<size_t>(cellPos.x), static_cast<size_t>(cellPos.y), game::TileType::NONE);
+		{
+			tilemap.setCell
+			(
+				static_cast<size_t>(cellPos.x), 
+				static_cast<size_t>(cellPos.y),
+				game::TileType::NONE
+			);
+		}
 		
-		// zooming
+		// zoom //
 		float mouseWheelMove = GetMouseWheelMove();
 		camera_zoom -= mouseWheelMove * 0.2f;
 		camera_zoom = std::clamp(camera_zoom, 0.1f, 5.f);
 
+		// fill temporary allocator //
+		actorsArray = mem::PointerArray<game::Actor>(tempAllocator, 1);
+		actorsArray.set(&player, 0);
 
+		solidArray = mem::PointerArray<game::Solid>(tempAllocator, 1);
+		solidArray.set(&movingPlatform, 0);
+	
+		// call update functions //
 		player.update(deltaTime);
-		updateCameraFollow(player.getPosition(), 0.f, camera_zoom);
-		// moving platform
 		movingPlatform.update(deltaTime);
-
+		updateCameraFollow(player.getPosition(), 0.f, camera_zoom);
 	}
 
+// render loop // ---------------------------------------------------------------------------------
 	void render() override
 	{
+		// render world objects //
 		tilemap.render();
 		chunk.render();
 		player.render();
 		movingPlatform.render();
 
+		// draw tile placement rectangle //
 		if (selected_tile != game::TileType::NONE)
 		{
 			Rectangle mouseRect = {
-				mouseCellPos.x,
-				mouseCellPos.y,
-				16.f,
-				16.f
+				mouseCellPos.x, mouseCellPos.y,
+				16.f, 16.f
 			};
 
-			DrawRectangleLines(mouseRect.x, mouseRect.y, 16.f, 16.f, YELLOW);
+			DrawRectangleLines
+			(
+				static_cast<int>(mouseRect.x), static_cast<int>(mouseRect.y), 
+				16, 16, 
+				YELLOW
+			);
 		}
-		DrawRectangleLinesEx({ 0, 0, game::TILEMAP_WIDTH * game::TILEMAP_CELL_SIZE, game::TILEMAP_HEIGHT * game::TILEMAP_CELL_SIZE }, 4.f, BLACK);
+
+		// draw world border //
+		DrawRectangleLinesEx
+		(
+			{
+				0,0,
+				game::TILEMAP_WIDTH * game::TILEMAP_CELL_SIZE,
+				game::TILEMAP_HEIGHT * game::TILEMAP_CELL_SIZE 
+			}, 
+			4.f, 
+			BLACK
+		);
 	}
 
+// render user interface // -----------------------------------------------------------------------
 	void renderUI() override
 	{
 		auto fps = "FPS: " + std::to_string(GetFPS());
@@ -162,40 +195,45 @@ protected:
 		auto selected_text = "Selected Tile: " + std::to_string(static_cast<int>(selected_tile));
 		DrawText(selected_text.c_str(), 16, 32, 20, BLACK);
 	}
+// handling interfaces // -------------------------------------------------------------------------
 private:
+	mem::PointerArray<game::Actor>& getAllActors() override
+	{
+		return actorsArray;
+	}
+
+	mem::PointerArray<game::Solid>& getAllSolids() override
+	{
+		return solidArray;
+	}
+// game data // -----------------------------------------------------------------------------------
+private:
+	// world data
 	game::Tilemap tilemap;
 	game::Chunk chunk;
 
+	// collision handlers
 	game::SolidCollisionCheck solidCollisions;
 	game::CollisionCheckManager collisionManager;
 	
+	// game objects
 	game::MovingPlatform movingPlatform;
 	game::Player player;
 
+	// util data
 	Vector2 mouseCellPos{ 0.f };
 	Vector2 player_start{ 64.f*16.f, 60.f*16.f };
 	float camera_zoom = 2.0f;
-
-	game::Actor** actorsPtr;
-	size_t actors_size;
-
 	game::TileType selected_tile{ game::TileType::NONE };
 
-	// Geerbt über IAllActors
-	std::tuple<game::Actor**, size_t> getAllActors() override
-	{
-		return { actorsPtr, actors_size };
-	}
-
-	// Geerbt über IAllSolids
-	std::vector<game::Solid*> getAllSolids() override
-	{
-		return { &movingPlatform };
-	}
-
+	// temporary pointer collections
+	mem::PointerArray<game::Actor> actorsArray;
+	mem::PointerArray<game::Solid> solidArray;
 };
 
+// entry point // ---------------------------------------------------------------------------------
 int main() {
 	Game1 game;
 	game.run();
 }
+// ------------------------------------------------------------------------------------------------

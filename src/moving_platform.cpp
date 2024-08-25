@@ -12,7 +12,6 @@ game::MovingPlatform::MovingPlatform(
 	moveDirection{ moveDir }, moveSpeed{ moveSpd },
 	game::Solid(all_actors, temp_allocator)
 {
-	std::cout << "temp_alloc in moving platform: " << &tempAllocator << " and address from parameter: " << &temp_allocator << "\n";
 
 }
 

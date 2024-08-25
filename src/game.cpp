@@ -11,8 +11,6 @@ game::Game::Game(size_t w, size_t h, const char* t) :
 	SetWindowState(FLAG_VSYNC_HINT);
 	SetTargetFPS(500);
 	camera = {};
-
-	std::cout << "temp_alloc in game: " << &tempAllocator << "\n";
 }
 
 game::Game::~Game() { }

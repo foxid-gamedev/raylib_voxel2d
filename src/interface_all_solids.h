@@ -1,13 +1,13 @@
 #pragma once
 
-#include <vector>
 #include "solid.h"
+#include "memory/pointer_array.h"
 
 namespace game
 {
 	struct IAllSolids
 	{
 		virtual ~IAllSolids() = default;
-		virtual std::vector<Solid*> getAllSolids() = 0;
+		virtual mem::PointerArray<Solid>& getAllSolids() = 0;
 	};
 }

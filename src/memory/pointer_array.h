@@ -1,7 +1,6 @@
 #pragma once
 
 #include "bump_allocator.h"
-
 #include <cassert>
 
 namespace mem
@@ -10,7 +9,59 @@ namespace mem
 	class PointerArray
 	{
 	public:
-		PointerArray(T** data, size_t size) : data(data), size(size) {}
+		explicit PointerArray(BumpAllocator& allocator, size_t amount) : allocator(allocator), amount(amount), size(sizeof(T*) * amount)
+		{
+			data = reinterpret_cast<T**>(allocator.allocate(size));
+		}
+
+		PointerArray(const PointerArray& other) noexcept :
+			allocator(other.allocator),
+			amount(other.amount),
+			size(sizeof(T*) * other.amount),
+			data(other.data)
+		{}
+
+		PointerArray& operator=(const PointerArray& other) noexcept
+		{
+			if (this != &other)
+			{
+				data = other.data;
+				amount = other.amount;
+				size = other.size;
+			}
+			return *this;
+		}
+
+		PointerArray(PointerArray&& other) noexcept
+		{
+			data = other.data;
+			amount = other.amount;
+			size = other.size;
+			other.data = nullptr;
+			other.amount = 0;
+			other.size = 0;
+		}
+
+		PointerArray& operator=(PointerArray&& other) noexcept
+		{
+			if (this != &other)
+			{
+				data = other.data;
+				amount = other.amount;
+				size = other.size;
+				other.data = nullptr;
+				other.amount = 0;
+				other.size = 0;
+			}
+			return *this;
+		}
+
+		virtual ~PointerArray() 
+		{
+			amount = 0;
+			size = 0;
+			data = nullptr;
+		}
 
 		T* operator[](size_t index) const 
 		{
@@ -18,20 +69,35 @@ namespace mem
 			return data[index]; 
 		}
 
-		size_t size() const { return size; }
+		void set(T* value, size_t index)
+		{
+			assert(index < size);
+			data[index] = value;
+		}
+
+		T** begin() { return data; }
+		T** end() { return data + size; }
+
+		const T** cbegin() const { return const_cast<const T**>(data); }
+		const T** cend() const { return const_cast<const T**>(data + size); }
+
+		bool contains(const T* value) const
+		{
+			for (auto current = cbegin(); current < cend(); ++current)
+			{
+				if (*current == value)
+					return true;
+			}
+			return false;
+		}
+
+		size_t getAmount() const { return amount; }
+		size_t getSize() const { return size; }
 
 	private:
-		T** data;
+		size_t amount;
 		size_t size;
+		BumpAllocator& allocator;
+		T** data;
 	};
-
-	//template<typename T>
-	//PointerArray<T> create_pointer_array(BumpAllocator& allocator, size_t element_count)
-	//{
-	//	T** elements = reinterpret_cast<T**>(allocator.allocate(sizeof(T*) * element_count));
-	//	for (size_t i = 0; i < element_count; ++i)
-	//	{
-	//		elements[i] = &
-	//	}
-	//}
 }

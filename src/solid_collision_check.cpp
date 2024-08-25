@@ -10,8 +10,14 @@ bool game::SolidCollisionCheck::checkCollision(float x, float y, float w, float 
 {
     Rectangle other = { x,y,w,h };
 
-    for (Solid* solid : allSolids->getAllSolids())
+    auto& solids = allSolids->getAllSolids();
+
+    for (size_t i = 0; i < solids.getAmount(); ++i)
     {
+        Solid* solid = solids[i];
+        if (solid == nullptr)
+            continue;
+
         if (!solid->isCollidable())
             continue;
 

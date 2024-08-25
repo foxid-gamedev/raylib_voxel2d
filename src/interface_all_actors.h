@@ -1,15 +1,14 @@
 #pragma once
 
-#include <vector>
+
 #include "actor.h"
-#include <tuple>
+#include "memory/pointer_array.h"
 
 namespace game
 {
 	struct IAllActors
 	{
 		virtual ~IAllActors() = default;
-		// virtual std::vector<Actor*> getAllActors() = 0;
-		virtual std::tuple<Actor**, size_t> getAllActors() = 0;
+		virtual mem::PointerArray<Actor>& getAllActors() = 0;
 	};
 }
