@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -114,6 +114,7 @@
     <ClCompile Include="src\solid.cpp" />
     <ClCompile Include="src\solid_collision_check.cpp" />
     <ClCompile Include="src\tilemap.cpp" />
+    <ClCompile Include="src\world.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\collision_check_manager.h" />
@@ -129,12 +130,14 @@
     <ClInclude Include="src\interface_updatable.h" />
     <ClInclude Include="src\memory\bump_allocator.h" />
     <ClInclude Include="src\memory\pointer_array.h" />
+    <ClInclude Include="src\memory\pool_allocator.h" />
     <ClInclude Include="src\moving_platform.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\player.h" />
     <ClInclude Include="src\solid.h" />
     <ClInclude Include="src\solid_collision_check.h" />
     <ClInclude Include="src\tilemap.h" />
+    <ClInclude Include="src\world.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

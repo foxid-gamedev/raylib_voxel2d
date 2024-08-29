@@ -2,8 +2,7 @@
 #include "chunk.h"
 
 game::Chunk::Chunk(int chunkX, int chunkY) :
-    chunkX(chunkX), chunkY(chunkY),
-    tiles(std::make_unique<std::array<game::TileType, game::CHUNK_SIZE>>())
+    chunkX(chunkX), chunkY(chunkY)
 {
     fillAll(TileType::NONE);
 }
@@ -12,7 +11,7 @@ game::TileType game::Chunk::getTile(size_t x, size_t y) const
 {
     if (x < CHUNK_WIDTH && y < CHUNK_HEIGHT)
     {
-        return (*tiles)[getTileIndex(x, y)];
+        return tiles[getTileIndex(x, y)];
     }
     return TileType::NONE;
 }
@@ -21,7 +20,7 @@ void game::Chunk::setTile(size_t x, size_t y, TileType tile)
 {
     if (x < CHUNK_WIDTH && y < CHUNK_HEIGHT)
     {
-        (*tiles)[getTileIndex(x, y)] = tile;
+        tiles[getTileIndex(x, y)] = tile;
     }
 }
 
@@ -38,7 +37,7 @@ void game::Chunk::render() const
             (
                 worldX + x * TILEMAP_CELL_SIZE, 
                 worldY + y * TILEMAP_CELL_SIZE, 
-                (*tiles)[getTileIndex(x, y)]
+                tiles[getTileIndex(x, y)]
             );
         }
     }
@@ -56,7 +55,10 @@ int game::Chunk::getChunkY() const
 
 void game::Chunk::fillAll(game::TileType type)
 {
-    std::fill(tiles->begin(), tiles->end(), type);
+    for (size_t i = 0; i < CHUNK_SIZE; ++i)
+    {
+        tiles[i] = type;
+    }
 }
 
 size_t game::Chunk::getTileIndex(size_t x, size_t y) const

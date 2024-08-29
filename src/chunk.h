@@ -33,6 +33,6 @@ namespace game
 
 		int chunkX, chunkY;
 
-		std::unique_ptr<std::array<TileType, CHUNK_SIZE>> tiles;
+		TileType tiles[CHUNK_SIZE];
 	};
 }

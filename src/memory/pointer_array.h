@@ -1,5 +1,6 @@
 #pragma once
 
+#include "pool_allocator.h"
 #include "bump_allocator.h"
 #include <cassert>
 
@@ -9,13 +10,22 @@ namespace mem
 	class PointerArray
 	{
 	public:
-		explicit PointerArray(BumpAllocator& allocator, size_t amount) : allocator(allocator), amount(amount), size(sizeof(T*) * amount)
+		explicit PointerArray(BumpAllocator& allocator, size_t amount) : 
+			amount(amount), 
+			size(sizeof(T*) * amount)
 		{
 			data = reinterpret_cast<T**>(allocator.allocate(size));
 		}
 
+		template<typename... Args>
+		explicit PointerArray(PoolAllocator& allocator, size_t amount, Args&&... args) :
+			amount(amount),
+			size(sizeof(T*)* amount)
+		{
+			data = reinterpret_cast<T**>(allocator.allocate<T>(std::forward<Args>(args)));
+		}
+
 		PointerArray(const PointerArray& other) noexcept :
-			allocator(other.allocator),
 			amount(other.amount),
 			size(sizeof(T*) * other.amount),
 			data(other.data)
@@ -97,7 +107,6 @@ namespace mem
 	private:
 		size_t amount;
 		size_t size;
-		BumpAllocator& allocator;
 		T** data;
 	};
 }
